@@ -9,6 +9,7 @@ import sys
 from Unbuffered import Unbuffered
 sys.stdout = Unbuffered(sys.stdout)
 from functions_calcul import strategiePaquets
+import os
 
 VLAMBDA=4
 NB_EQUIPEMENTS=3
@@ -116,14 +117,27 @@ iter=1
 #nb_copies=3
 #listPaquets=initPaquets(nb_total_paquets)
 indice_packet=0
+l=0
+os.remove("strat.dat")
+filedata = open("strat.dat", "a")
 while(nb_paquets_restants<nb_total_paquets):
     equipement=1
     indexes=[]
     nb_paquets=arrivee_trames()
     listPaquets=initPaquets(nb_paquets)
     listStrategie=strategiePaquets(listPaquets)
-    #for m in range(len(listStrategie)):
-    	#print("strategie : ", listStrategie[m], " pour le packet : ", m)
+    #print(len(listStrategie))
+    longueur=len(listStrategie)+l
+    #print(len(listStrategie))
+    #print(len(listPaquets))
+    indice_str=0
+    while l <longueur:
+    	num_packet=l+1
+	data=str(num_packet)+";"+str(listStrategie[indice_str])+"\n"
+	l+=1
+	indice_str+=1
+	filedata.write(data)
+
     i=1
     for i in range(nb_paquets):
         #choix équipement
@@ -139,7 +153,7 @@ while(nb_paquets_restants<nb_total_paquets):
         indice_packet+=1
     nb_total_paquets-=nb_paquets
     iter+=1
-
+filedata.close()
 
 
 
