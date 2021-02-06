@@ -15,6 +15,7 @@ def max(a, y, z):
         Max = z
         if y > z:
             Max = y
+
     return Max
 
 def sendPaquets():
@@ -30,7 +31,7 @@ def sendPaquets():
     n3=1
     n4=1
     for i in range (len(listPaquets)):
-        
+
         if(i==0):
             #Envoyer le paquet avec la strategie 4 = 4fois
             n4+=1
@@ -74,6 +75,14 @@ def sendPaquets():
             print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
             print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
             print("\n\n\n")
+        if(strategie2> strategie3 and strategie2> strategie4):
+            str=2
+        if(strategie3> strategie2 and strategie3> strategie4):
+            str=3
+        if(strategie4> strategie3 and strategie4> strategie2):
+            str=4
+        print("strategie utilisee est : ",str)
+        print("\n\n")
 
 def main():
     sendPaquets()
