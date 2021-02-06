@@ -20,6 +20,9 @@ def exp(vlambda):
         exp=math.floor(random.exponential(scale=vlambda))
     return exp
 
+"""
+arrivee des trames avec une loi exponentielle de paramètre lambda
+"""
 def arrivee_trames():
     slot_sum=0
     num_trame=0
@@ -30,7 +33,7 @@ def arrivee_trames():
         slot=exp(VLAMBDA)%10
         slot_sum+=slot
         if (slot_sum<10):
-            print( "on recoit sur le slot ", slot_sum)
+            print( "-on recoit sur le slot "+str(slot_sum))
             listePaquets.append(slot_sum)
             nb_paquets+=1
         i+=1
@@ -47,20 +50,9 @@ def processus_poisson(nbEquipements, vlambda):
 
   return nb_paquet_equipement
 
-def execute_simulation(listeEquipementsPaquets, nbTrames, _lambda):
-    nbEquipements=len(listeEquipementsPaquets)
-    nbPacketsEquipement = processus_poisson(nbEquipements, _lambda)
-    i=0
-    while (i<nbTrames):
-        trame=Trame()
-        for k in listeEquipementsPaquets:
-            j=0
-            while(j<len(listeEquipementsPaquets[k])):
-                print("equipement = ", listeEquipementsPaquets.keys()[k], "paquet : ", listeEquipementsPaquets[k][j].contenu)
-                trame.sendPacket(listeEquipementsPaquets[k][j], nbPacketsEquipement[k])
-                j+=1
-        i+=1
-
+"""
+retourne la liste des slots tires de loi uniforme sur lesquels un equipement va envoyer
+"""
 def send_indexes(n):
     indices_tires=[]
     indice_slot=0
@@ -74,6 +66,9 @@ def send_indexes(n):
             continue
     return indices_tires
 
+"""
+initialiser les paquets avec lesquels on fera la simulation
+"""
 def initPaquets(n):
     listePaquets=[]
     listeAlphabet=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
@@ -84,42 +79,50 @@ def initPaquets(n):
         packet=Packet(i,listeAlphabet[indice])
         listePaquets.append(packet)
     return listePaquets
+"""
+executer la simulation
+"""
+def execute_simulation():
+	nb_total_paquets=10
+	nb_paquets_restants=0
+	iter=1
+	indice_packet=0
+	l=0
+	os.remove("strat.dat")
+	filedata = open("strat.dat", "a")
+	while(nb_paquets_restants<nb_total_paquets):
+	    equipement=1
+	    indexes=[]
+	    nb_paquets=arrivee_trames()
+	    listPaquets=initPaquets(nb_paquets)
+	    listStrategie=strategiePaquets(listPaquets)
+	    longueur=len(listStrategie)+l
+	    indice_str=0
+	    while l <longueur:
+	    	num_packet=l+1
+		data=str(num_packet)+";"+str(listStrategie[indice_str])+"\n"
+		l+=1
+		indice_str+=1
+		filedata.write(data)
+	    i=1
+	    for i in range(nb_paquets):
+		#choix équipement
+		num_equipement=int(uniform(1, NB_EQUIPEMENTS))
+		nb_copies=listStrategie[i]
+		indexes=send_indexes(nb_copies)
+		for j in range (listStrategie[i]):
+		    #print("l'equipement "+ equipement+ " va envoyer le paquet ", listPaquets[i-1].contenu," dans le slot ",
+		    #indexes[j], "dans la trame", iter+1)
+		    p=listPaquets[i-1].contenu
+		    t=iter+1
+		    print("{ l'equipement "+ str(equipement)+ " va envoyer le paquet '"+ str(p)+"' dans la trame "+ str(t)+" }")
+		sleep(0.8)
+		equipement+=1
+		indice_packet+=1
+	    nb_total_paquets-=nb_paquets
+	    iter+=1
+	filedata.close()
 
-nb_total_paquets=10
-nb_paquets_restants=0
-iter=1
-indice_packet=0
-l=0
-os.remove("strat.dat")
-filedata = open("strat.dat", "a")
-while(nb_paquets_restants<nb_total_paquets):
-    equipement=1
-    indexes=[]
-    nb_paquets=arrivee_trames()
-    listPaquets=initPaquets(nb_paquets)
-    listStrategie=strategiePaquets(listPaquets)
-    longueur=len(listStrategie)+l
-    indice_str=0
-    while l <longueur:
-    	num_packet=l+1
-	data=str(num_packet)+";"+str(listStrategie[indice_str])+"\n"
-	l+=1
-	indice_str+=1
-	filedata.write(data)
-
-    i=1
-    for i in range(nb_paquets):
-        #choix équipement
-        num_equipement=int(uniform(1, NB_EQUIPEMENTS))
-        nb_copies=listStrategie[i]
-        indexes=send_indexes(nb_copies)
-        for j in range (listStrategie[i]):
-            print("l'equipement ", equipement, " va envoyer le paquet ", listPaquets[i-1].contenu," dans le slot ",
-            indexes[j], "dans la trame", iter+1)
-        sleep(0.8)
-        equipement+=1
-        indice_packet+=1
-    nb_total_paquets-=nb_paquets
-    iter+=1
-filedata.close()
+if __name__ == "__main__":
+	execute_simulation()
 

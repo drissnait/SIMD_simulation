@@ -9,6 +9,9 @@ def ack():
 def ub1(xj,n,nj):
     return xj+math.sqrt(2*math.log(n))/nj
 
+"""
+fonction qui retourne le max entre 3 valeurs (pour les strategies)
+"""
 def max(a, y, z):
     Max = a
     if y > Max:
@@ -20,6 +23,9 @@ def max(a, y, z):
 
     return Max
 
+"""
+definit la strategie d'envoi des paquets
+"""
 def strategiePaquets(listPaquets):
     a2=0.2
     a3=0.3
@@ -42,10 +48,6 @@ def strategiePaquets(listPaquets):
             strategie2=ub1(reward2,n,n2)
             strategie3=ub1(reward3,n,n3)
             n+=1
-            # print("reward2 = ", reward2, "--- reward3 = ", reward3, " --- reward4 = ",reward4, "\n")
-            # print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
-            # print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
-            # print("\n\n\n")
         else:
             if(max(strategie2,strategie3,strategie4)==strategie2):
                 n2+=1
@@ -72,10 +74,6 @@ def strategiePaquets(listPaquets):
                 strategie3=ub1(reward3,n,n3)
                 strategie4=ub1(reward4,n,n4)
                 n+=1
-            # print("reward2 = ", reward2, "--- reward3 = ", reward3, " --- reward4 = ",reward4, "\n")
-            # print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
-            # print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
-            # print("\n\n\n")
         if(strategie2> strategie3 and strategie2> strategie4):
             str=2
         if(strategie3> strategie2 and strategie3> strategie4):
@@ -85,23 +83,3 @@ def strategiePaquets(listPaquets):
         listStrategie.append(str)
     return listStrategie
 
-def main():
-    a=Packet(1,"a")
-    b=Packet(2,"b")
-    c=Packet(3,"c")
-    d=Packet(4,"d")
-    #listPaquets=['a','b','c','d','e','f','g']
-    listPaquets=[a,b,c,d]
-    listStrategie=strategiePaquets(listPaquets)
-    #filedata = open("strat.dat", "w")
-    i=0
-    while i <len(listStrategie):
-        print("strategie utilisee pour le paquet ", i, " est la ", listStrategie[i])
-        data=str(i)+";"+str(listStrategie[i])+"\n"
-        i+=1
-        #filedata.write(data)
-    #filedata.close()
-
-
-if __name__ == "__main__":
-    main()

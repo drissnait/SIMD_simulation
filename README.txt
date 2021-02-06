@@ -1,5 +1,5 @@
 						LACEMENT du projet
-- pour lancer le projet, il suffit de lancer la commande make, cela éxecute le fichier Makefile
+-pour lancer le projet, il suffit de lancer la commande make, cela éxecute le fichier Makefile
 -à la fin de l'éxecution, un fichier de données "strat.dat" contient les résultats des stratégies pour différents packets sous la forme :
 	numero_de_packet;numero_de_la_strategie
 -une image "plot.png" est généré aussi, elle contient le graphe représentant les données dans le fichier "strat.dat", cela est généré
@@ -11,4 +11,5 @@ structure des fichiers :
 	-"Trame.py" : contient la classe trame
 	-"main.py" : main généré
 	-"strat.dat" : fichier de données
- 
+
+Le projet a été développé sous Python 2.7.18
