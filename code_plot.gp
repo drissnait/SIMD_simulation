@@ -13,3 +13,5 @@ set datafile separator ";"
 plot "strat.dat" u 2:xtic(1) with linespoints
 
 
+
+

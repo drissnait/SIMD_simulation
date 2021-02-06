@@ -20,31 +20,6 @@ def exp(vlambda):
         exp=math.floor(random.exponential(scale=vlambda))
     return exp
 
-"""def arrivee_trames():
-    slot_sum=0
-    num_trame=0
-    listePaquets=[]
-    for i in range(6):
-        slot=exp(VLAMBDA)%10
-        slot_sum+=slot
-        if (slot_sum<10):
-            print( "on recoit sur le slot ", slot_sum, "dans la trame", num_trame)
-            listePaquets.append(slot_sum)
-
-        if(slot_sum>10 and listePaquets):
-            for j in listePaquets:
-                num_equipement=int(uniform(1, NB_EQUIPEMENTS))
-                print("l'equipement ", num_equipement, " envoi le paquet ", j, " dans la trame ", num_trame)
-            slot_sum=slot_sum%10
-            num_trame+=1
-            listePaquets=[]
-            listePaquets.append(slot_sum)
-            print( "on recoit sur le slot ", slot_sum, "dans la trame", num_trame)
-
-    if(slot_sum<10 and listePaquets):
-        for j in listePaquets:
-            print("l'equipement ", num_equipement, " envoi le paquet ", j, " dans la trame ", num_trame)"""
-
 def arrivee_trames():
     slot_sum=0
     num_trame=0
@@ -110,12 +85,9 @@ def initPaquets(n):
         listePaquets.append(packet)
     return listePaquets
 
-initPaquets(4)
-nb_total_paquets=4
+nb_total_paquets=10
 nb_paquets_restants=0
 iter=1
-#nb_copies=3
-#listPaquets=initPaquets(nb_total_paquets)
 indice_packet=0
 l=0
 os.remove("strat.dat")
@@ -126,10 +98,7 @@ while(nb_paquets_restants<nb_total_paquets):
     nb_paquets=arrivee_trames()
     listPaquets=initPaquets(nb_paquets)
     listStrategie=strategiePaquets(listPaquets)
-    #print(len(listStrategie))
     longueur=len(listStrategie)+l
-    #print(len(listStrategie))
-    #print(len(listPaquets))
     indice_str=0
     while l <longueur:
     	num_packet=l+1
@@ -144,7 +113,6 @@ while(nb_paquets_restants<nb_total_paquets):
         num_equipement=int(uniform(1, NB_EQUIPEMENTS))
         nb_copies=listStrategie[i]
         indexes=send_indexes(nb_copies)
-        #print(indexes)
         for j in range (listStrategie[i]):
             print("l'equipement ", equipement, " va envoyer le paquet ", listPaquets[i-1].contenu," dans le slot ",
             indexes[j], "dans la trame", iter+1)
@@ -155,22 +123,3 @@ while(nb_paquets_restants<nb_total_paquets):
     iter+=1
 filedata.close()
 
-
-
-"""a1=Packet('a','a')
-b1=Packet('b','b')
-c=Packet('c','c')
-a2=Packet('a2','a')
-listePaquets1=[a1, b1]
-listePaquets2=[c]
-listePaquets3=[a2]
-listeEquipementsPaquets={0 : listePaquets1, 1:listePaquets2, 2:listePaquets3}
-nb_equipements=len(listeEquipementsPaquets)
-execute_simulation(listeEquipementsPaquets,1,4)"""
-
-
-
-#x=Trame()
-#p=Packet('a','a')
-#x.sendPacket(p,3)
-#x.str_paquets()
