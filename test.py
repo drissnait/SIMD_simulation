@@ -18,8 +18,7 @@ def max(a, y, z):
 
     return Max
 
-def sendPaquets():
-    listPaquets=['a','b','c','d','e']
+def sendPaquets(listPaquets):
     a2=0.2
     a3=0.3
     a4=0.4
@@ -30,8 +29,8 @@ def sendPaquets():
     n2=1
     n3=1
     n4=1
+    listStrategie=[]
     for i in range (len(listPaquets)):
-
         if(i==0):
             #Envoyer le paquet avec la strategie 4 = 4fois
             n4+=1
@@ -41,10 +40,10 @@ def sendPaquets():
             strategie2=ub1(reward2,n,n2)
             strategie3=ub1(reward3,n,n3)
             n+=1
-            print("reward2 = ", reward2, "--- reward3 = ", reward3, " --- reward4 = ",reward4, "\n")
-            print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
-            print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
-            print("\n\n\n")
+            # print("reward2 = ", reward2, "--- reward3 = ", reward3, " --- reward4 = ",reward4, "\n")
+            # print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
+            # print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
+            # print("\n\n\n")
         else:
             if(max(strategie2,strategie3,strategie4)==strategie2):
                 n2+=1
@@ -71,21 +70,25 @@ def sendPaquets():
                 strategie3=ub1(reward3,n,n3)
                 strategie4=ub1(reward4,n,n4)
                 n+=1
-            print("reward2 = ", reward2, "--- reward3 = ", reward3, " --- reward4 = ",reward4, "\n")
-            print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
-            print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
-            print("\n\n\n")
+            # print("reward2 = ", reward2, "--- reward3 = ", reward3, " --- reward4 = ",reward4, "\n")
+            # print("i = ", i, "//n2 = ", n2, "// n3 = ", n3, " // n4 = ",n4, "\n")
+            # print("n = ", n," || strategie2 =  ", strategie2, " || strategie 3 = ", strategie3, "|| strategie 4= ", strategie4)
+            # print("\n\n\n")
         if(strategie2> strategie3 and strategie2> strategie4):
             str=2
         if(strategie3> strategie2 and strategie3> strategie4):
             str=3
         if(strategie4> strategie3 and strategie4> strategie2):
             str=4
-        print("strategie utilisee est : ",str)
-        print("\n\n")
+        listStrategie.append(str)
+    return listStrategie
 
 def main():
-    sendPaquets()
+    listPaquets=['a','b','c','d','e','f','g']
+    listStrategie=sendPaquets(listPaquets)
+    for i in range(len(listStrategie)):
+        print("strategie utilisee pour le paquet ", i, " est la ", listStrategie[i])
+
 
 if __name__ == "__main__":
     main()

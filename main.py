@@ -4,6 +4,10 @@ from Trame import Trame
 from random import uniform
 from numpy import random
 import math
+from time import sleep
+import sys
+from Unbuffered import Unbuffered
+sys.stdout = Unbuffered(sys.stdout)
 
 VLAMBDA=4
 NB_EQUIPEMENTS=3
@@ -66,6 +70,20 @@ def processus_poisson(nbEquipements, vlambda):
 
   return nb_paquet_equipement
 
+def execute_simulation(listeEquipementsPaquets, nbTrames, _lambda):
+    nbEquipements=len(listeEquipementsPaquets)
+    nbPacketsEquipement = processus_poisson(nbEquipements, _lambda)
+    i=0
+    while (i<nbTrames):
+        trame=Trame()
+        for k in listeEquipementsPaquets:
+            j=0
+            while(j<len(listeEquipementsPaquets[k])):
+                print("equipement = ", listeEquipementsPaquets.keys()[k], "paquet : ", listeEquipementsPaquets[k][j].contenu)
+                trame.sendPacket(listeEquipementsPaquets[k][j], nbPacketsEquipement[k])
+                j+=1
+        i+=1
+
 def send_indexes(n):
     indices_tires=[]
     indice_slot=0
@@ -110,10 +128,12 @@ while(nb_paquets_restants<nb_total_paquets):
         for j in range (nb_copies):
             print("l'equipement ", equipement, " va envoyer le paquet ", listPaquets[i-1].contenu," dans le slot ",
             indexes[j], "dans la trame", iter+1)
+        sleep(0.8)
         equipement+=1
         indice_packet+=1
     nb_total_paquets-=nb_paquets
     iter+=1
+
 
 
 
