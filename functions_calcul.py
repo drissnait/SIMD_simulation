@@ -1,5 +1,6 @@
 import random
 import math
+from Packet import Packet
 
 """retourne une strategie aleatoire (pour les tests avec toutes les strategies dans des ordres differents"""
 def ack():
@@ -19,7 +20,7 @@ def max(a, y, z):
 
     return Max
 
-def sendPaquets(listPaquets):
+def strategiePaquets(listPaquets):
     a2=0.2
     a3=0.3
     a4=0.4
@@ -85,14 +86,21 @@ def sendPaquets(listPaquets):
     return listStrategie
 
 def main():
-    listPaquets=['a','b','c','d','e','f','g']
-    listStrategie=sendPaquets(listPaquets)
-    filedata = open("strat.dat", "w")
-    for i in range(len(listStrategie)):
+    a=Packet(1,"a")
+    b=Packet(2,"b")
+    c=Packet(3,"c")
+    d=Packet(4,"d")
+    #listPaquets=['a','b','c','d','e','f','g']
+    listPaquets=[a,b,c,d]
+    listStrategie=strategiePaquets(listPaquets)
+    #filedata = open("strat.dat", "w")
+    i=0
+    while i <len(listStrategie):
         print("strategie utilisee pour le paquet ", i, " est la ", listStrategie[i])
         data=str(i)+";"+str(listStrategie[i])+"\n"
-        filedata.write(data)
-    filedata.close()
+        i+=1
+        #filedata.write(data)
+    #filedata.close()
 
 
 if __name__ == "__main__":

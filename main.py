@@ -8,6 +8,7 @@ from time import sleep
 import sys
 from Unbuffered import Unbuffered
 sys.stdout = Unbuffered(sys.stdout)
+from functions_calcul import strategiePaquets
 
 VLAMBDA=4
 NB_EQUIPEMENTS=3
@@ -112,7 +113,7 @@ initPaquets(4)
 nb_total_paquets=4
 nb_paquets_restants=0
 iter=1
-nb_copies=3
+#nb_copies=3
 #listPaquets=initPaquets(nb_total_paquets)
 indice_packet=0
 while(nb_paquets_restants<nb_total_paquets):
@@ -120,12 +121,17 @@ while(nb_paquets_restants<nb_total_paquets):
     indexes=[]
     nb_paquets=arrivee_trames()
     listPaquets=initPaquets(nb_paquets)
+    listStrategie=strategiePaquets(listPaquets)
+    #for m in range(len(listStrategie)):
+    	#print("strategie : ", listStrategie[m], " pour le packet : ", m)
     i=1
     for i in range(nb_paquets):
         #choix équipement
         num_equipement=int(uniform(1, NB_EQUIPEMENTS))
+        nb_copies=listStrategie[i]
         indexes=send_indexes(nb_copies)
-        for j in range (nb_copies):
+        #print(indexes)
+        for j in range (listStrategie[i]):
             print("l'equipement ", equipement, " va envoyer le paquet ", listPaquets[i-1].contenu," dans le slot ",
             indexes[j], "dans la trame", iter+1)
         sleep(0.8)
